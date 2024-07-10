@@ -556,17 +556,17 @@ func (w *wsIoWrapper) Read(buf []byte) (int, error) {
 		w.buf = readBuf
 		w.pos = 0
 	}
-	nRead := copy(buf[:], w.buf[w.pos:])
+	nRead := copy(buf, w.buf[w.pos:])
 	w.pos += nRead
 	return nRead, nil
 }
 
-func (w *wsIoWrapper) Write(buf []byte) (int, error) {
-	err := w.wsConn.WriteMessage(websocket.BinaryMessage, buf)
+func (w *wsIoWrapper) Write(p []byte) (int, error) {
+	err := w.wsConn.WriteMessage(websocket.BinaryMessage, p)
 	if err != nil {
 		return 0, err
 	}
-	return len(buf), nil
+	return len(p), nil
 }
 
 func (w *wsIoWrapper) Close() error {
